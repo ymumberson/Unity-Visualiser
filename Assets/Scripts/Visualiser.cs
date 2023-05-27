@@ -4,68 +4,68 @@ using UnityEngine;
 
 public class Visualiser : MonoBehaviour
 {
-    [Range(0.1f, 2f)]
-    public float duration = 1f;
-    public int numPointsToGenerate;
-    [Range(0f, 1f)]
-    public float chanceToConverge;
+    public static Visualiser Instance;
     private float timer;
     private List<Vector3> lastPositions;
     private List<Point> pointList;
+    private List<Point> sparePoints;
+    private Line line;
 
     private void Awake()
     {
+        if (Instance)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         timer = 0f;
         lastPositions = new List<Vector3>();
         pointList = new List<Point>();
-    }
-
-    private void Start()
-    {
-        //pointList.Add(new Point(0.5f, Color.white));
-        //lastPositions.Add(Vector3.zero);
-        //pointList.Add(new Point(0.5f, Color.green));
-        //lastPositions.Add(Vector3.zero);
-        //pointList.Add(new Point(0.5f, Color.magenta));
-        //lastPositions.Add(Vector3.zero);
-        for (int i=0; i<numPointsToGenerate; ++i)
-        {
-            pointList.Add(new Point(0.5f, new Color(Random.value, Random.value, Random.value)));
-            lastPositions.Add(Vector3.zero);
-        }
+        sparePoints = new List<Point>();
     }
 
     private void Update()
     {
         UpdateAllDrawables();
-        bool converging = Random.value < chanceToConverge;
-        Vector3 convergePoint = new Vector3(Random.Range(-8.3f, 8.3f), Random.Range(-4.3f, 4.3f), 0f);
-        for (int i=0; i<pointList.Count; ++i)
+    }
+
+    public void DrawCircle(Vector3 position, float radius, Color colour)
+    {
+        Point p;
+        if (sparePoints.Count == 0)
         {
-            Point p = pointList[i];
-            if (!p.animating)
-            {
-                if (converging)
-                {
-                    p.Animate(lastPositions[i], convergePoint, duration);
-                    this.lastPositions[i] = convergePoint;
-                }
-                else
-                {
-                    Vector3 newPosition = new Vector3(Random.Range(-8.3f, 8.3f), Random.Range(-4.3f, 4.3f), 0f);
-                    p.Animate(lastPositions[i], newPosition, duration);
-                    this.lastPositions[i] = newPosition;
-                }
-                
-            }
+            p = new Point(radius, colour);
+            pointList.Add(p);
         }
+        else
+        {
+            p = sparePoints[0];
+            sparePoints.RemoveAt(0);
+            pointList.Add(p);
+        }
+        p.DrawPoint(position, radius, colour);
     }
 
     private void UpdateAllDrawables()
     {
-        foreach (Point p in pointList)
+        foreach (Point p in pointList.ToArray())
         {
             p.Update(Time.deltaTime);
+            if (!p.animating)
+            {
+                pointList.Remove(p);
+                sparePoints.Add(p);
+            }
         }
+    }
+
+    public static float CubicInOut(float t)
+    {
+        float a = Mathf.Round(t);
+        return (4 * Mathf.Pow(t, 3) * (1 - a)) + ((1 - (4 * Mathf.Pow(1 - t, 3))) * a);
     }
 }

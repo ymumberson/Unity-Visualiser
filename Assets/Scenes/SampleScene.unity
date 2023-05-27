@@ -206,6 +206,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1260283888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1260283890}
+  - component: {fileID: 1260283889}
+  m_Layer: 0
+  m_Name: Point Animation Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1260283889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260283888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653d5dbde696d064eb0246d27c927c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.725
+  numPointsToGenerate: 50
+  chanceToConverge: 0.215
+--- !u!4 &1260283890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260283888}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2129736, y: 0.20030308, z: 2.960897}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1450721296
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,22 +279,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1450721296}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c613b8f78e4a747b79af0fe4bb6c47, type: 3}
+  m_Script: {fileID: 11500000, guid: ce2fb1d5313d9e74eb765467d6a65c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  point: {fileID: 0}
-  meshRenderer: {fileID: 0}
-  <animating>k__BackingField: 0
-  timer: 0
-  duration: 0
-  start: {x: 0, y: 0, z: 0}
-  end: {x: 0, y: 0, z: 0}
-  radius: 0
-  colour:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
+  duration: 2
+  spiralIncreaseRate: 0.17
+  numPoints: 223
+  spiralTurns: 46.43
+  spiralRadius: 4.3
+  startScale: 0.01
+  radius: 0.55
+  pointColourStart: {r: 1, g: 1, b: 1, a: 0}
+  pointColourEnd: {r: 0.36477336, g: 0.8113208, b: 0.19517621, a: 0}
 --- !u!4 &1450721298
 Transform:
   m_ObjectHideFlags: 0
@@ -275,9 +317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d51c91028a5a8b48be5e4a7d90644cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.5
-  numPointsToGenerate: 50
-  chanceToConverge: 0.5
 --- !u!1 &1607277876
 GameObject:
   m_ObjectHideFlags: 0
