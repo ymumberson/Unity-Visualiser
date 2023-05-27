@@ -6,44 +6,26 @@ public class Visualiser : MonoBehaviour
 {
     public float duration = 1f;
     private float timer;
+    private Vector3 lastPosition;
 
     private void Awake()
     {
         timer = 0f;
+        lastPosition = Vector3.zero;
     }
 
-    private void LateUpdate()
+    private void Start()
     {
-        timer += Time.deltaTime;
-        float start = -5f;
-        float end = 5f;
+        //Point.Instance.Animate(new Vector3(-3,-3,0), new Vector3(3,3,0), 2f, 1f, Color.white);
+    }
 
-        float animT = Mathf.Clamp01(timer / duration);
-        float size = Mathf.Lerp(0.5f, 3, (animT > 0.5f ? 1f - animT : animT));
-        Color c = Color.Lerp(Color.black, Color.green, size);
-        if (timer > 2 * duration)
+    private void Update()
+    {
+        if (!Point.Instance.animating)
         {
-            timer = 0f;
-            animT = 0f;
-            size = Mathf.Lerp(0.5f, 3, (animT > 0.5f ? 1f - animT : animT));
-            c = Color.Lerp(Color.black, Color.green, size);
+            Vector3 newPosition = new Vector3(Random.Range(-8.3f, 8.3f), Random.Range(-4.3f, 4.3f), 0f);
+            Point.Instance.Animate(lastPosition, newPosition, 1f, 1f, Color.white);
+            this.lastPosition = newPosition;
         }
-        else if (timer > duration)
-        {
-            float temp = end;
-            end = start;
-            start = temp;
-            animT = Mathf.Clamp01((timer - duration) / duration);
-            size = Mathf.Lerp(0.5f, 0.1f, (animT > 0.5f ? 1f - animT : animT));
-            c = Color.Lerp(Color.black, Color.green, size);
-        }
-
-        //float size = Mathf.Lerp(0.5f, 2, (animT > 0.5f ? 1f - animT : animT));
-
-        float a = Mathf.Round(animT);
-        animT = (4 * Mathf.Pow(animT, 3) * (1 - a)) + ((1 - (4 * Mathf.Pow(1 - animT, 3))) * a);
-        float x = Mathf.Lerp(start, end, animT);
-
-        Point.Instance.DrawPoint(new Vector3(x, 0, 0), size, c);
     }
 }

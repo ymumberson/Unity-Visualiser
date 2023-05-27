@@ -216,6 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1450721298}
   - component: {fileID: 1450721301}
+  - component: {fileID: 1450721297}
   m_Layer: 0
   m_Name: Visualiser
   m_TagString: Untagged
@@ -223,6 +224,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1450721297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450721296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c613b8f78e4a747b79af0fe4bb6c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1450721298
 Transform:
   m_ObjectHideFlags: 0
@@ -249,6 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d51c91028a5a8b48be5e4a7d90644cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duration: 1
 --- !u!1 &1607277876
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1607277877
 MonoBehaviour:
   m_ObjectHideFlags: 0
