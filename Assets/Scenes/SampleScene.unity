@@ -236,6 +236,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c613b8f78e4a747b79af0fe4bb6c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  point: {fileID: 0}
+  meshRenderer: {fileID: 0}
+  <animating>k__BackingField: 0
+  timer: 0
+  duration: 0
+  start: {x: 0, y: 0, z: 0}
+  end: {x: 0, y: 0, z: 0}
+  radius: 0
+  colour:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!4 &1450721298
 Transform:
   m_ObjectHideFlags: 0
@@ -262,7 +275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d51c91028a5a8b48be5e4a7d90644cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: 0.5
+  numPointsToGenerate: 50
+  chanceToConverge: 0.5
 --- !u!1 &1607277876
 GameObject:
   m_ObjectHideFlags: 0
