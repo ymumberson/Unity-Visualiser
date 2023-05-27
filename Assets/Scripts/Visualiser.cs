@@ -4,28 +4,68 @@ using UnityEngine;
 
 public class Visualiser : MonoBehaviour
 {
+    [Range(0.1f, 2f)]
     public float duration = 1f;
+    public int numPointsToGenerate;
+    [Range(0f, 1f)]
+    public float chanceToConverge;
     private float timer;
-    private Vector3 lastPosition;
+    private List<Vector3> lastPositions;
+    private List<Point> pointList;
 
     private void Awake()
     {
         timer = 0f;
-        lastPosition = Vector3.zero;
+        lastPositions = new List<Vector3>();
+        pointList = new List<Point>();
     }
 
     private void Start()
     {
-        //Point.Instance.Animate(new Vector3(-3,-3,0), new Vector3(3,3,0), 2f, 1f, Color.white);
+        //pointList.Add(new Point(0.5f, Color.white));
+        //lastPositions.Add(Vector3.zero);
+        //pointList.Add(new Point(0.5f, Color.green));
+        //lastPositions.Add(Vector3.zero);
+        //pointList.Add(new Point(0.5f, Color.magenta));
+        //lastPositions.Add(Vector3.zero);
+        for (int i=0; i<numPointsToGenerate; ++i)
+        {
+            pointList.Add(new Point(0.5f, new Color(Random.value, Random.value, Random.value)));
+            lastPositions.Add(Vector3.zero);
+        }
     }
 
     private void Update()
     {
-        if (!Point.Instance.animating)
+        UpdateAllDrawables();
+        bool converging = Random.value < chanceToConverge;
+        Vector3 convergePoint = new Vector3(Random.Range(-8.3f, 8.3f), Random.Range(-4.3f, 4.3f), 0f);
+        for (int i=0; i<pointList.Count; ++i)
         {
-            Vector3 newPosition = new Vector3(Random.Range(-8.3f, 8.3f), Random.Range(-4.3f, 4.3f), 0f);
-            Point.Instance.Animate(lastPosition, newPosition, 1f, 1f, Color.white);
-            this.lastPosition = newPosition;
+            Point p = pointList[i];
+            if (!p.animating)
+            {
+                if (converging)
+                {
+                    p.Animate(lastPositions[i], convergePoint, duration);
+                    this.lastPositions[i] = convergePoint;
+                }
+                else
+                {
+                    Vector3 newPosition = new Vector3(Random.Range(-8.3f, 8.3f), Random.Range(-4.3f, 4.3f), 0f);
+                    p.Animate(lastPositions[i], newPosition, duration);
+                    this.lastPositions[i] = newPosition;
+                }
+                
+            }
+        }
+    }
+
+    private void UpdateAllDrawables()
+    {
+        foreach (Point p in pointList)
+        {
+            p.Update(Time.deltaTime);
         }
     }
 }

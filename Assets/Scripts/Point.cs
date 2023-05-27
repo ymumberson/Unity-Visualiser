@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Point : MonoBehaviour
+public class Point
 {
-    public static Point Instance;
     private Transform point;
     private MeshRenderer meshRenderer;
     public bool animating { get; private set; }
@@ -16,33 +15,25 @@ public class Point : MonoBehaviour
     Color colour;
 
     // Start is called before the first frame update
-    private void Awake()
+    public Point(float radius, Color colour)
     {
-        if (Instance)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-        
         point = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
         meshRenderer = point.GetComponent<MeshRenderer>();
         meshRenderer.material = new Material(Shader.Find("Unlit/Color"));
         meshRenderer.sharedMaterial.color = Color.white;
         point.position = Vector3.zero;
         point.localScale = Vector3.one;
-
+        this.radius = radius;
+        this.colour = colour;
         timer = 0f;
         animating = false;
     }
 
-    private void Update()
+    public void Update(float time)
     {
         if (animating)
         {
-            timer += Time.deltaTime;
+            timer += time;
             Animate();
         }
         else if (meshRenderer.enabled)
@@ -51,12 +42,22 @@ public class Point : MonoBehaviour
         }
     }
 
+    public void DrawPoint(Vector3 position)
+    {
+        this.DrawPoint(position, this.radius, this.colour);
+    }
+
     public void DrawPoint(Vector3 position, float radius, Color color)
     {
         point.position = position;
         point.localScale = Vector3.one * radius;
         meshRenderer.sharedMaterial.color = color;
         meshRenderer.enabled = true;
+    }
+
+    public void Animate(Vector3 start, Vector3 end, float duration)
+    {
+        this.Animate(start, end, duration, this.radius, this.colour);
     }
 
     public void Animate(Vector3 start, Vector3 end, float duration, float radius, Color colour)
